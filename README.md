@@ -1,6 +1,10 @@
 # jsbind
 
-**jsbind** is a C++&harr;JavaScript binding library which supports multitple JavaScript engines and backends.
+**jsbind** is a C++ :left_right_arrow: JavaScript binding library which supports multitple JavaScript engines and backends.
+
+**!!!NOTE:**
+
+> This repository is still a work in progress. Even though we use the library in production, it's nowhere near open-source friendly (yet). We'll be working to change that in the following weeks. So, until this note is gone, please accept that the version you see here has no documentation and no support.
 
 ## Copyright
 
