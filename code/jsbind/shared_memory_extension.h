@@ -130,8 +130,10 @@ private:
 
     void init()
     {
-#if defined(JSBIND_CEF)
-
+#if defined(JSBIND_EMSCRIPTEN)
+        auto u8a = local(emscripten::typed_memory_view(m_size, m_buffer));
+        auto obj = u8a["buffer"];
+#elif defined(JSBIND_CEF)
         auto obj = CefV8Value::CreateArrayBuffer(m_buffer, m_size, new internal::release_buffer_callback);
 #else
 #   error "jsbind: Not supported platform (yet)"

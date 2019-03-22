@@ -20,10 +20,6 @@ set(sources
     pods.h
 )
 
-# if((NOT JSBIND_JSC) OR JSBIND_JSC_TYPED_ARRAYS OR JSBIND_JSC_PATCH_TYPED_ARRAYS)
-#     set(sources ${sources} shared_memory_extension_test.cpp)
-# endif()
-
 add_library(jsbind-testlib STATIC
     ${sources}
 )
