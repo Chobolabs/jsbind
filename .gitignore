@@ -1,2 +1,5 @@
 third_party/
 build/
+
+# IDEs and editors
+.vscode/

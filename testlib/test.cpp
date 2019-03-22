@@ -18,7 +18,6 @@
 #include <cstdint>
 #include <cmath>
 
-#define DOCTEST_CONFIG_IMPLEMENT
 #define DOCTEST_CONFIG_NO_SHORT_MACRO_NAMES
 #include "doctest/doctest.h"
 
@@ -50,8 +49,6 @@ public:
 };
 
 test_exception_handler* test_handler = nullptr;
-
-DOCTEST_TEST_SUITE("common");
 
 DOCTEST_TEST_CASE("local")
 {
@@ -619,78 +616,15 @@ DOCTEST_TEST_CASE("bind_pod")
     DOCTEST_CHECK(s.age == 15);
 }
 
-void jsbind_init()
-{
-    jsbind::initialize();
-    jsbind::enter_context();
-}
-
-void jsbind_deinit()
-{
-    jsbind::exit_context();
-    jsbind::deinitialize();
-}
-
-int jsbind_run_tests(int argc, char* argv[])
+void jsbind_init_tests()
 {
     test_handler = new test_exception_handler;
     jsbind::set_exception_handler(test_handler);
+}
 
-    doctest::Context context(argc, argv);
-    int res = context.run();
-
+void jsbind_deinit_tests()
+{
     jsbind::set_default_exception_handler();
     delete test_handler;
     test_handler = nullptr;
-
-    return res;
 }
-
-int jsbind_run_tests_main(int argc, char* argv[])
-{
-    jsbind_init();
-    int res = jsbind_run_tests(argc, argv);
-    jsbind_deinit();
-    return res;
-}
-
-#if defined(JSBIND_NODE)
-
-int jsbind_run_tests_node()
-{
-    char* argv[] = {"test"};
-    return jsbind_run_tests_main(1, argv);
-}
-
-JSBIND_BINDINGS(Tests)
-{
-    jsbind::function("run", jsbind_run_tests_node);
-}
-
-void node_main(v8::Local<v8::Object> exports)
-{
-    jsbind::v8_initialize_with_global(exports);
-}
-
-NODE_MODULE(tests, node_main)
-
-#elif defined(JSBIND_CEF)
-// use runJsBindTests to call from js
-// or jsbind_run_tests_cef to call from C++
-int jsbind_run_tests_cef()
-{
-    char* argv[] = {"test"};
-    return jsbind_run_tests(1, argv);
-}
-
-JSBIND_BINDINGS(Tests)
-{
-    jsbind::function("runJsBindTests", jsbind_run_tests_cef);
-}
-
-#else
-int main(int argc, char* argv[])
-{
-    return jsbind_run_tests_main(argc, argv);
-}
-#endif

@@ -95,15 +95,12 @@ void deinitialize()
 
 void enter_context()
 {
-    // devtools doesn't work if we enter and exit the context
-    // who knows why...
-    // it works like this, so we'll leave it for now
-    //cef_context->Enter();
+    cef_context->Enter();
 }
 
 void exit_context()
 {
-    //cef_context->Exit();
+    cef_context->Exit();
 }
 
 
