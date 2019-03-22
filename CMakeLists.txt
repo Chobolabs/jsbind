@@ -20,8 +20,6 @@ option(JSBIND_V8 "JSBind: Use v8 as underlying JS engine" OFF)
 option(JSBIND_NODE "JSBind: Use Node as underlying JS backend" OFF)
 
 option(JSBIND_JSC "JSBind: Use JSC as underlying JS engine" OFF)
-option(JSBIND_JSC_TYPED_ARRAYS "JSBind: Use typed array from modern JSC" OFF)
-option(JSBIND_JSC_PATCH_TYPED_ARRAYS "JSBind: Use typed array patch from phoboslabs for JSC" OFF)
 
 option(JSBIND_EMSCRIPTEN "JSBind: Use emscripten as underlying JS backend" OFF)
 
