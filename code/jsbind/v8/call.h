@@ -29,7 +29,7 @@ namespace internal
         // +1 so when there are zero args we at least have something
         v8::Local<v8::Value> v8_args[num_args + 1] = { internal::to_v8(args)... };
 
-        v8::TryCatch tc;
+        v8::TryCatch tc(internal::isolate);
 
         auto result = func->Call(self, num_args, v8_args);
 

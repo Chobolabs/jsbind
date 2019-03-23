@@ -104,7 +104,8 @@ public:
         auto k = internal::to_v8(key);
         auto obj = v8::Object::Cast(*m_handle);
 
-        return obj->HasOwnProperty(k);
+        auto maybe = obj->HasOwnProperty(internal::ctx.to_local(), k);
+        return maybe.FromMaybe(false);
     }
 
     template <typename K>
@@ -168,9 +169,8 @@ public:
         // +1 so when there are zero args we at least have something
         v8::Local<v8::Value> v8_args[num_args + 1] = { internal::to_v8(args)... };
 
-        auto result = obj->CallAsConstructor(num_args, v8_args);
-
-        return local(scope.Escape(result));
+        auto maybe = obj->CallAsConstructor(internal::ctx.to_local(), num_args, v8_args);
+        return local(scope.Escape(maybe.FromMaybe(v8::Local<v8::Value>())));
     }
 
     template <typename... Args>
@@ -194,7 +194,7 @@ public:
         return internal::from_v8<T>(m_handle);
     }
 
-    local typeof() const
+    local typeOf() const
     {
         // return local(m_handle->TypeOf(isolate));
         if (m_handle->IsUndefined()) return local("undefined");

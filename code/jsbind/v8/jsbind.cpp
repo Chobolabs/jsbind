@@ -292,7 +292,7 @@ void v8_initialize_with_global(v8::Local<Object> global)
     v8::Local<v8::ObjectTemplate> module = v8::ObjectTemplate::New(isolate);
     class_data::global = &module;
     initialize_bindings();
-    global->SetPrototype(module->NewInstance());
+    global->SetPrototype(ctx.to_local(), module->NewInstance());
     class_data::global = nullptr;
 }
 
@@ -342,7 +342,7 @@ void run_script(const char* src, const char* fname)
         script = Script::Compile(source);
     }
 
-    v8::TryCatch try_catch;
+    v8::TryCatch try_catch(isolate);
 
     if (script.IsEmpty())
     {
