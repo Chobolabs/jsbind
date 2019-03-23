@@ -61,6 +61,38 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
             message(FATAL_ERROR "Set the appropriate emscripten toolchain file")
         endif()
         # nothing more to do all we need comes from the outside
+    elseif(JSBIND_NODE)
+        if (NOT DEFINED JSBIND_NODE_VERSION)
+            execute_process(COMMAND node --version OUTPUT_VARIABLE JSBIND_NODE_VERSION)
+            string(SUBSTRING ${JSBIND_NODE_VERSION} 1 -1 JSBIND_NODE_VERSION)
+            string(STRIP ${JSBIND_NODE_VERSION} JSBIND_NODE_VERSION)
+        endif()
+
+        add_library(jsbind-node-target INTERFACE)
+
+        if(MSVC)
+            file(TO_CMAKE_PATH "$ENV{HOMEDRIVE}$ENV{HOMEPATH}" usrHome)
+            target_include_directories(jsbind-node-target INTERFACE
+                ${usrHome}/.node-gyp/${JSBIND_NODE_VERSION}/include/node
+            )
+            if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+                target_link_libraries(jsbind-node-target INTERFACE
+                    ${usrHome}/.node-gyp/${JSBIND_NODE_VERSION}/x64/node.lib
+                )
+            else()
+                target_link_libraries(jsbind-node-target INTERFACE
+                    ${usrHome}/.node-gyp/${JSBIND_NODE_VERSION}/ia32/node.lib
+                )
+            endif()
+            target_compile_options(jsbind-node-target INTERFACE
+                /wd4251
+                /wd4275
+            )
+        elseif(APPLE)
+        else() # assuming linux
+        endif()
+
+        set(JSBIND_JS_BACKEND_LIBS jsbind-node-target)
     else()
         message(FATAL_ERROR "JSBind: Unsupported jsbind js engine")
     endif()
