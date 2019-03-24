@@ -42,11 +42,17 @@ JS is a very popular language. There is no doubt that other developers want to c
 
 ### Reference
 
+A full reference of all functions and classes is available [here](doc/reference.md).
+
 ### Integration notes
+
+Here are some backend specific instructions for integrating jsbind:
 
 #### node.js
 
 #### v8
+
+The library can create or be bound to a single v8 context. Multiple contexts are currently not supported.
 
 #### Emscripten
 
@@ -54,7 +60,11 @@ JS is a very popular language. There is no doubt that other developers want to c
 
 jsbind can only run on a **render process** in CEF and is bound to a single CEF frame (`iframe`). The frame in CEF is the unit which owns a distinct JS v8 context and they can't be shared.
 
+The library can be bound to a single CEF frame. Multiple frames and contexts are currently not supported.
+
 #### JavaScriptCore
+
+The library can create a single JSC context. Binding to an existing context and creating multiple contexts are currently not supported.
 
 ## Contributing
 
