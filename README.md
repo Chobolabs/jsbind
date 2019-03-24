@@ -26,6 +26,14 @@ Supports:
 * Defining custom value types for seamless integration
 * Sharing memory between JS ArrayBuffer-s and C++
 
+## Motivation
+
+We had a very complex stack for [Mayhem](http://www.playmayhem.com/). It's a game with a C++ engine with some elements of the gameplay and pretty muche the entire metagame logic in JavaScript. The target platforms for playing the game were iOS and Android. We also supported the browser as a target though not for playing the game, but for spectating and watching replays. The development platforms were Windows, macOS and Linux. The game's server ran on a Linux containter. We also had an editor written in JavaScript which could run in a browser or as a local application on a custom Chromium browser (through CEF) with the engine embedded inside.
+
+Eventually we had a core in C++ and JavaScript which we wanted to run on all those platforms. Initially we had the C++/JS bidning layer written in concrete ways for all platforms, but this quickly got out of hand. So we created jsbind. A binding library which lets you support all those platforms with a single codebase.
+
+JS is a very popular language. There is no doubt that other developers want to combine it with C++. If they have similar complex stacks, perhaps it can be of help to them.
+
 ## Usage
 
 ### Adding jsbind to your project
