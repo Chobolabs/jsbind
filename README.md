@@ -6,6 +6,20 @@
 
 > This repository is still a work in progress. Even though we use the library in production, it's nowhere near open-source friendly (yet). We'll be working to change that in the following weeks. So, until this note is gone, please accept that the version you see here has no documentation and no support.
 
+## Table of contents
+
+- [Features](#features)
+- [Motivation](#motivation)
+- [Usage](#usage)
+  - [Adding jsbind to your project](#adding-jsbind-to-your-project)
+  - [Basic usage](#basic-usage)
+  - [Reference](#reference)
+  - [Integration notes](#integration-notes)
+- [Contributing](#contributing)
+  - [Building the tests and examples](#building-the-tests-and-examples)
+- [Alternatives](#alternatives)
+- [Copyright](#copyright)
+
 ## Features
 
 Allows the users to have C++ bindings with the same codebase to the following JavaScript backends:
@@ -25,6 +39,7 @@ Supports:
 * Seamless integration of C++ built-in types and `std::string`
 * Defining custom value types for seamless integration
 * Sharing memory between JS ArrayBuffer-s and C++
+* C++11 compatible
 
 ## Motivation
 
