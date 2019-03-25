@@ -36,7 +36,22 @@ JS is a very popular language. There is no doubt that other developers want to c
 
 ## Usage
 
+Add this repository to your project's directory structure either as a submodule or as a copy.
+
 ### Adding jsbind to your project
+
+#### CMake
+
+* Set exactly *one* of these CMake options to `TRUE` to describe the desired JS backend. This can be done with the command line or in your `CMakeLists.txt` files:
+    * `JSBIND_NODE` for node.js
+    * `JSBIND_V8` for pure v8
+    * `JSBIND_EMSCRIPTEN` for emscripten
+    * `JSBIND_CEF` for CEF
+    * `JSBIND_JSC` for JavaScriptCore
+* optionally set `JSBIND_JS_BACKEND_LIBS` to the one or more targets which describe the JS backend.
+    * This is not needed for emscripten
+    * If you do not set this, you will have to use `include_directories` to set the appropriate include directories for jsbind and then link your targets with the appropriate libraries.
+* `add_subdirectory(path/to/jsbind/subdir)` to add the jsbind static library target.
 
 ### Basic usage
 
@@ -50,11 +65,17 @@ Here are some backend specific instructions for integrating jsbind:
 
 #### node.js
 
+For node.js the library cannot create the JS engine context, so it can only be initialized with `jsbind::v8_initialize_with_global`. There is a simple example of doing so [the node.js specific test file](test/test_node_main.cpp).
+
+Do not forget to deinitialize jsbind or you may get a crash because of dangling v8 refs when exiting. `node::AtExit` is probably the way to go. Again there is a simple example of using it in [the node.js specific test file](test/test_node_main.cpp).
+
 #### v8
 
 The library can create or be bound to a single v8 context. Multiple contexts are currently not supported.
 
 #### Emscripten
+
+You need to link emscripten "executables" which use jsbind with the `--bind` linker flag.
 
 #### CEF
 
