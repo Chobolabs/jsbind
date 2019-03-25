@@ -292,7 +292,8 @@ void v8_initialize_with_global(v8::Local<Object> global)
     v8::Local<v8::ObjectTemplate> module = v8::ObjectTemplate::New(isolate);
     class_data::global = &module;
     initialize_bindings();
-    global->SetPrototype(ctx.to_local(), module->NewInstance());
+    auto r = global->SetPrototype(ctx.to_local(), module->NewInstance());
+    JSBIND_JS_CHECK(r.FromMaybe(false), "Could not set Module prototype");
     class_data::global = nullptr;
 }
 

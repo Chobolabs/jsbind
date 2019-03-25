@@ -90,6 +90,13 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
             )
         elseif(APPLE)
         else() # assuming linux
+            target_include_directories(jsbind-node-target INTERFACE
+                ~/.node-gyp/${JSBIND_NODE_VERSION}/include/node
+            )
+            target_compile_options(jsbind-node-target INTERFACE
+                -fPIC # possibly add this to jsbind itself
+                      # after all we're always a shared library in a node context
+            )
         endif()
 
         set(JSBIND_JS_BACKEND_LIBS jsbind-node-target)
