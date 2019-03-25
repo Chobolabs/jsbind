@@ -25,7 +25,7 @@ src_group(jsbind sources
     jsbind/exception.h
 )
 
-if((NOT JSBIND_JSC) OR JSBIND_JSC_TYPED_ARRAYS OR JSBIND_JSC_PATCH_TYPED_ARRAYS)
+if((NOT JSBIND_JSC) OR (NOT JSBIND_JSC_NO_TYPED_ARRAYS))
     src_group(jsbind sources
         jsbind/shared_memory_extension.h
     )
@@ -88,7 +88,7 @@ elseif(JSBIND_V8)
     set(defs ${defs} -DJSBIND_V8)
 elseif(JSBIND_JSC)
     set(defs ${defs} -DJSBIND_JSC)
-    if(JSBIND_JSC_TYPED_ARRAYS)
+    if(NOT JSBIND_JSC_NO_TYPED_ARRAYS)
         set(defs ${defs} -D_JSC_TYPED_ARRAYS)
     endif()
 elseif(JSBIND_EMSCRIPTEN)

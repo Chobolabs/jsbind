@@ -25,7 +25,7 @@ option(JSBIND_EMSCRIPTEN "JSBind: Use emscripten as underlying JS backend" OFF)
 
 option(JSBIND_CEF "JSBind: Use CEF as underlying JS backend" OFF)
 
-mark_as_advanced(JSBIND_ENABLE_TESTING JSBIND_BUILD_EXAMPLES)
+mark_as_advanced(JSBIND_ENABLE_TESTING JSBIND_BUILD_EXAMPLES JSBIND_DEBUGGING)
 
 set(sources)
 
