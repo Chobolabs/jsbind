@@ -18,6 +18,8 @@ JSBIND_BINDINGS(testclass)
         ;
 }
 
+namespace jsbind
+{
 namespace test
 {
 
@@ -36,4 +38,5 @@ int testclass::s_i = -1;
 float testclass::s_f = -0.1f;
 double testclass::s_d = -0.01;
 
+}
 }

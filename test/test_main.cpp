@@ -9,12 +9,12 @@ int main(int argc, char* argv[])
 {
     jsbind::initialize();
     jsbind::enter_context();
-    jsbind_init_tests();
+    jsbind::test::jsbind_init_tests();
 
     doctest::Context context(argc, argv);
     int res = context.run();
 
-    jsbind_deinit_tests();
+    jsbind::test::jsbind_deinit_tests();
     jsbind::exit_context();
     jsbind::deinitialize();
 

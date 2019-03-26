@@ -25,6 +25,9 @@
 using namespace jsbind;
 using doctest::Approx;
 
+namespace
+{
+
 class test_exception_handler : public jsbind::exception_handler
 {
     virtual void on_exception(const char* text) override
@@ -50,6 +53,8 @@ public:
 };
 
 test_exception_handler* test_handler = nullptr;
+
+}
 
 DOCTEST_TEST_SUITE("shared memory extension")
 {
@@ -539,6 +544,8 @@ DOCTEST_TEST_CASE("except")
 
 DOCTEST_TEST_CASE("bind_static")
 {
+    using jsbind::test::person;
+
     scope s;
     person joe;
     joe.set_age(10);
@@ -659,6 +666,11 @@ DOCTEST_TEST_CASE("creation")
 
 }
 
+namespace jsbind
+{
+namespace test
+{
+
 void jsbind_init_tests()
 {
     test_handler = new test_exception_handler;
@@ -670,4 +682,7 @@ void jsbind_deinit_tests()
     jsbind::set_default_exception_handler();
     delete test_handler;
     test_handler = nullptr;
+}
+
+}
 }

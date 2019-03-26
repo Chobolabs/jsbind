@@ -11,8 +11,9 @@
 
 JSBIND_BINDINGS(pods)
 {
-    using namespace test;
     using namespace jsbind;
+    using namespace jsbind::test;
+
     value_object<vec>("Vec")
         .field("x", &vec::x)
         .field("y", &vec::y)
@@ -40,12 +41,14 @@ JSBIND_BINDINGS(pods)
 
 namespace
 {
-test::vec the_vec;
-test::mec the_mec;
-test::sec the_sec;
-test::nec the_nec;
+jsbind::test::vec the_vec;
+jsbind::test::mec the_mec;
+jsbind::test::sec the_sec;
+jsbind::test::nec the_nec;
 }
 
+namespace jsbind
+{
 namespace test
 {
 
@@ -89,5 +92,5 @@ nec get_stored_nec()
     return the_nec;
 }
 
-
+}
 }

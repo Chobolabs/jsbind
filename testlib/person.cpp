@@ -12,6 +12,8 @@
 JSBIND_BINDINGS(person)
 {
     using namespace jsbind;
+    using jsbind::test::person;
+
     class_<person>("Person")
         .class_function("initStatic", &person::init_static)
         .class_function("getClassName", &person::get_class_name)
@@ -21,6 +23,11 @@ JSBIND_BINDINGS(person)
 }
 
 using namespace std;
+
+namespace jsbind
+{
+namespace test
+{
 
 int person::class_custom_data;
 set<person*> person::m_all_persons;
@@ -57,3 +64,5 @@ person::~person()
     m_all_persons.erase(this);
 }
 
+}
+}

@@ -10,6 +10,8 @@
 
 #include <string>
 
+namespace jsbind
+{
 namespace test
 {
 
@@ -46,5 +48,7 @@ struct nec
 
 void store_nec(const nec& m);
 nec get_stored_nec();
+
+}
 
 }

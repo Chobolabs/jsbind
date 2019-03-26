@@ -10,6 +10,8 @@
 
 #include <string>
 
+namespace jsbind
+{
 namespace test
 {
 
@@ -30,4 +32,5 @@ public:
     static double s_d;
 };
 
+}
 }

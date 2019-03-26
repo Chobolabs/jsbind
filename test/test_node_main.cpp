@@ -12,11 +12,11 @@ using node::AtExit;
 
 void jsbind_run_tests_node()
 {
-    jsbind_init_tests();
+    jsbind::test::jsbind_init_tests();
 
     int res = doctest::Context().run();
 
-    jsbind_deinit_tests();
+    jsbind::test::jsbind_deinit_tests();
 }
 
 void at_exit(void*)

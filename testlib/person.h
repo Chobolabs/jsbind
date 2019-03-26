@@ -12,6 +12,11 @@
 #include <set>
 #include <cstdint>
 
+namespace jsbind
+{
+namespace test
+{
+
 class person
 {
 public:
@@ -35,3 +40,6 @@ private:
 
     float m_age = 0;
 };
+
+}
+}
