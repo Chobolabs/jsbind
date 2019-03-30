@@ -26,7 +26,5 @@ int main(int argc, char* argv[])
     jsbind::exit_context();
     jsbind::deinitialize();
 
-    puts("\n"); // long story: emcc requires this
-
     return res;
 }
