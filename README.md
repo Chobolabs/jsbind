@@ -96,7 +96,7 @@ You need to link emscripten "executables" which use jsbind with the `--bind` lin
 
 jsbind can only run on a **render process** in CEF and is bound to a single CEF frame (`iframe`). The frame in CEF is the unit which owns a distinct JS v8 context and they can't be shared.
 
-The library can be bound to a single CEF frame. Multiple frames and contexts are currently not supported.
+The library can be bound to a single CEF frame and its context. Multiple contexts are currently not supported, though if you run in multiple processes (as you should) you can have a jsbind instance for each of them.
 
 #### JavaScriptCore
 

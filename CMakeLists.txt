@@ -100,7 +100,7 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
         endif()
 
         set(JSBIND_JS_BACKEND_LIBS jsbind-node-target)
-	elseif(JSBIND_CEF)
+    elseif(JSBIND_CEF)
         if(NOT JSBIND_CEF_CEF_CMAKE_DIR) # could be external
             set(JSBIND_CEF_CEF_CMAKE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/third_party/cef-cmake)
         endif()
@@ -126,4 +126,3 @@ endif()
 if(JSBIND_ENABLE_TESTING)
     add_subdirectory(test)
 endif()
-
