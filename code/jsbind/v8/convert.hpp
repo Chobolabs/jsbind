@@ -8,9 +8,9 @@
 //
 #pragma once
 
-#include "global.h"
+#include "global.hpp"
 
-#include "jsbind/common/wrapped_class.h"
+#include "jsbind/common/wrapped_class.hpp"
 
 #include <string>
 #include <type_traits>

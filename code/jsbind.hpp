@@ -8,6 +8,6 @@
 //
 #pragma once
 
-#include "jsbind/funcs.h"
-#include "jsbind/value.h"
-#include "jsbind/bind.h"
+#include "jsbind/funcs.hpp"
+#include "jsbind/value.hpp"
+#include "jsbind/bind.hpp"

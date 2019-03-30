@@ -6,7 +6,7 @@
 // See accompanying file LICENSE.txt or copy at
 // http://opensource.org/licenses/MIT
 //
-#include "console.h"
+#include "console.hpp"
 
 #include <iostream>
 #include <cassert>

@@ -8,8 +8,8 @@
 //
 #include <include/cef_app.h>
 
-#include <jsbind.h>
-#include <testlib.h>
+#include <jsbind.hpp>
+#include <testlib.hpp>
 
 #define DOCTEST_CONFIG_NO_SHORT_MACRO_NAMES
 #define DOCTEST_CONFIG_IMPLEMENT

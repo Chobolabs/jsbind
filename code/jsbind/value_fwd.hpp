@@ -9,13 +9,13 @@
 #pragma once
 
 #if defined(JSBIND_V8)
-#   include "v8/value_fwd.h"
+#   include "v8/value_fwd.hpp"
 #elif defined(JSBIND_JSC)
-#   include "jsc/value_fwd.h"
+#   include "jsc/value_fwd.hpp"
 #elif defined(JSBIND_EMSCRIPTEN)
-#   include "emscripten/value_fwd.h"
+#   include "emscripten/value_fwd.hpp"
 #elif defined(JSBIND_CEF)
-#   include "cef/value_fwd.h"
+#   include "cef/value_fwd.hpp"
 #else
 #   error "jsbind: Unknown platform"
 #endif

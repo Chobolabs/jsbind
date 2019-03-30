@@ -6,12 +6,12 @@
 // See accompanying file LICENSE.txt or copy at
 // http://opensource.org/licenses/MIT
 //
-#include "jsbind/funcs.h"
-#include "convert.h"
-#include "bind.h"
-#include "jsbind/console.h"
-#include "jsbind/exception.h"
-#include "jsbind/common/deinitializers.h"
+#include "jsbind/funcs.hpp"
+#include "convert.hpp"
+#include "bind.hpp"
+#include "jsbind/console.hpp"
+#include "jsbind/exception.hpp"
+#include "jsbind/common/deinitializers.hpp"
 
 #include <sstream>
 #include <iostream>

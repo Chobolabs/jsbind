@@ -8,8 +8,8 @@
 //
 #pragma once
 
-#include "convert.h"
-#include "call.h"
+#include "convert.hpp"
+#include "call.hpp"
 #include <vector>
 #include <functional>
 

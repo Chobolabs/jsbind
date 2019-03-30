@@ -13,11 +13,11 @@ endif()
 set(sources
     test.cpp
     person.cpp
-    person.h
+    person.hpp
     testclass.cpp
-    testclass.h
+    testclass.hpp
     pods.cpp
-    pods.h
+    pods.hpp
 )
 
 add_library(jsbind-testlib STATIC

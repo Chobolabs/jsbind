@@ -11,7 +11,7 @@
 #include <type_traits>
 #include <string>
 
-#include "jsbind/value_fwd.h"
+#include "jsbind/value_fwd.hpp"
 
 namespace jsbind
 {

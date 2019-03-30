@@ -1,6 +1,6 @@
 #pragma once
 
-#include "value.h"
+#include "value.hpp"
 
 #if defined(JSBIND_V8)
 #elif defined(JSBIND_JSC)

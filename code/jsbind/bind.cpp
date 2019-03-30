@@ -7,7 +7,7 @@
 // http://opensource.org/licenses/MIT
 //
 #if !defined(JSBIND_EMSCRIPTEN)
-#include "bind.h"
+#include "bind.hpp"
 
 namespace jsbind
 {

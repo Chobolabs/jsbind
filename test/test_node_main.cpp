@@ -9,8 +9,8 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
 
-#include <jsbind.h>
-#include <testlib.h>
+#include <jsbind.hpp>
+#include <testlib.hpp>
 
 #if !defined(JSBIND_NODE)
 #   error "This file is for the jsbind node.js bindings"

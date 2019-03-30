@@ -6,8 +6,8 @@
 // See accompanying file LICENSE.txt or copy at
 // http://opensource.org/licenses/MIT
 //
-#include "testclass.h"
-#include <jsbind.h>
+#include "testclass.hpp"
+#include <jsbind.hpp>
 
 JSBIND_BINDINGS(testclass)
 {

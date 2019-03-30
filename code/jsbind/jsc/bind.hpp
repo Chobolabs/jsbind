@@ -8,9 +8,9 @@
 //
 #pragma once
 
-#include "value.h"
-#include "jsbind/common/ptr_cast.h"
-#include "jsbind/common/deinitializers.h"
+#include "value.hpp"
+#include "jsbind/common/ptr_cast.hpp"
+#include "jsbind/common/deinitializers.hpp"
 
 namespace jsbind
 {

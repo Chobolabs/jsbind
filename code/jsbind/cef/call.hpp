@@ -8,10 +8,10 @@
 //
 #pragma once
 
-#include "jsbind/error.h"
-#include "jsbind/common/index_sequence.h"
-#include "jsbind/common/function_traits.h"
-#include "convert.h"
+#include "jsbind/error.hpp"
+#include "jsbind/common/index_sequence.hpp"
+#include "jsbind/common/function_traits.hpp"
+#include "convert.hpp"
 
 #include <tuple>
 

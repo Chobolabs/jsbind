@@ -10,8 +10,8 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
 
-#include <jsbind/funcs.h>
-#include <testlib.h>
+#include <jsbind/funcs.hpp>
+#include <testlib.hpp>
 
 int main(int argc, char* argv[])
 {

@@ -6,7 +6,7 @@
 // See accompanying file LICENSE.txt or copy at
 // http://opensource.org/licenses/MIT
 //
-#include "jsbind/funcs.h"
+#include "jsbind/funcs.hpp"
 
 #include <emscripten.h>
 

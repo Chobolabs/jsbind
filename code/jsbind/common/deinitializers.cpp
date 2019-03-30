@@ -6,7 +6,7 @@
 // See accompanying file LICENSE.txt or copy at
 // http://opensource.org/licenses/MIT
 //
-#include "deinitializers.h"
+#include "deinitializers.hpp"
 #include <vector>
 
 namespace

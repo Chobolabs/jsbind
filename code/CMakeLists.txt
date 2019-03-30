@@ -7,62 +7,62 @@
 # http://opensource.org/licenses/MIT
 #
 src_group(jsbind sources
-    jsbind.h
-    jsbind/common/index_sequence.h
-    jsbind/common/function_traits.h
-    jsbind/common/wrapped_class.h
-    jsbind/common/ptr_cast.h
+    jsbind.hpp
+    jsbind/common/index_sequence.hpp
+    jsbind/common/function_traits.hpp
+    jsbind/common/wrapped_class.hpp
+    jsbind/common/ptr_cast.hpp
     jsbind/common/deinitializers.cpp
-    jsbind/common/deinitializers.h
-    jsbind/funcs.h
-    jsbind/value.h
+    jsbind/common/deinitializers.hpp
+    jsbind/funcs.hpp
+    jsbind/value.hpp
     jsbind/bind.cpp
-    jsbind/bind.h
-    jsbind/error.h
+    jsbind/bind.hpp
+    jsbind/error.hpp
     jsbind/console.cpp
-    jsbind/console.h
+    jsbind/console.hpp
     jsbind/exception.cpp
-    jsbind/exception.h
+    jsbind/exception.hpp
 )
 
 if((NOT JSBIND_JSC) OR (NOT JSBIND_JSC_NO_TYPED_ARRAYS))
     src_group(jsbind sources
-        jsbind/shared_memory_extension.h
+        jsbind/shared_memory_extension.hpp
     )
 endif()
 
 if(JSBIND_JSC)
     src_group(jsc sources
         jsbind/jsc/jsbind.cpp
-        jsbind/jsc/value.h
-        jsbind/jsc/global.h
-        jsbind/jsc/convert.h
-        jsbind/jsc/call.h
-        jsbind/jsc/bind.h
+        jsbind/jsc/value.hpp
+        jsbind/jsc/global.hpp
+        jsbind/jsc/convert.hpp
+        jsbind/jsc/call.hpp
+        jsbind/jsc/bind.hpp
     )
 elseif(JSBIND_V8 OR JSBIND_NODE)
     src_group(v8 sources
         jsbind/v8/jsbind.cpp
-        jsbind/v8/value.h
-        jsbind/v8/global.h
-        jsbind/v8/convert.h
-        jsbind/v8/call.h
-        jsbind/v8/bind.h
+        jsbind/v8/value.hpp
+        jsbind/v8/global.hpp
+        jsbind/v8/convert.hpp
+        jsbind/v8/call.hpp
+        jsbind/v8/bind.hpp
     )
 elseif(JSBIND_EMSCRIPTEN)
     src_group(em sources
-        jsbind/emscripten/value.h
-        jsbind/emscripten/bind.h
+        jsbind/emscripten/value.hpp
+        jsbind/emscripten/bind.hpp
         jsbind/emscripten/jsbind.cpp
     )
 elseif(JSBIND_CEF)
     src_group(cef sources
         jsbind/cef/jsbind.cpp
-        jsbind/cef/value.h
-        jsbind/cef/global.h
-        jsbind/cef/convert.h
-        jsbind/cef/call.h
-        jsbind/cef/bind.h
+        jsbind/cef/value.hpp
+        jsbind/cef/global.hpp
+        jsbind/cef/convert.hpp
+        jsbind/cef/call.hpp
+        jsbind/cef/bind.hpp
     )
 else()
     message(FATAL_ERROR "Unsupported jsbind js engine")

@@ -6,8 +6,8 @@
 // See accompanying file LICENSE.txt or copy at
 // http://opensource.org/licenses/MIT
 //
-#include "pods.h"
-#include <jsbind.h>
+#include "pods.hpp"
+#include <jsbind.hpp>
 
 JSBIND_BINDINGS(pods)
 {

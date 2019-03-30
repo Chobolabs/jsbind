@@ -6,14 +6,14 @@
 // See accompanying file LICENSE.txt or copy at
 // http://opensource.org/licenses/MIT
 //
-#include "jsbind.h"
-#include "jsbind/console.h"
-#include "jsbind/exception.h"
-#include "jsbind/shared_memory_extension.h"
+#include "jsbind.hpp"
+#include "jsbind/console.hpp"
+#include "jsbind/exception.hpp"
+#include "jsbind/shared_memory_extension.hpp"
 
-#include "person.h"
-#include "testclass.h"
-#include "pods.h"
+#include "person.hpp"
+#include "testclass.hpp"
+#include "pods.hpp"
 
 #include <iostream>
 #include <cstdint>
