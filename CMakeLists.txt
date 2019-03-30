@@ -100,6 +100,15 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
         endif()
 
         set(JSBIND_JS_BACKEND_LIBS jsbind-node-target)
+	elseif(JSBIND_CEF)
+        if(NOT JSBIND_CEF_CEF_CMAKE_DIR) # could be external
+            set(JSBIND_CEF_CEF_CMAKE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/third_party/cef-cmake)
+        endif()
+
+        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+        include(${JSBIND_CEF_CEF_CMAKE_DIR}/cmake/cef_cmake.cmake)
+        add_subdirectory(${JSBIND_CEF_CEF_CMAKE_DIR} cef-cmake)
+        set(JSBIND_JS_BACKEND_LIBS cefdll_wrapper)
     else()
         message(FATAL_ERROR "JSBind: Unsupported jsbind js engine")
     endif()

@@ -1,4 +1,4 @@
-# jsbind tests and examples node.js
+# jsbind tests and examples for node.js
 
 1. You need a node.js instalation and node-gyp.
     * On Ubuntu they can come from apt. `sudo apt install node-gyp` should be enough.

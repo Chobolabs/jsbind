@@ -17,6 +17,11 @@ elseif(JSBIND_NODE)
     endif()
 
     set_target_properties(jsbind-test PROPERTIES PREFIX "" SUFFIX ".node")
+elseif(JSBIND_CEF)
+    add_executable(jsbind-test
+        test_cef_main.cpp
+        test_cef_renderer_app.cpp
+    )
 else()
     message(FATAL_ERROR "JSBind: Unsupported jsbind js engine")
 endif()
@@ -39,6 +44,8 @@ elseif(JSBIND_NODE)
         CONTENT "Module = require('./jsbind-test');\nModule.run();"
     )
     add_test(NAME jsbind COMMAND node ${outputDir}/jsbind-node-test.js)
+elseif(JSBIND_CEF)
+    add_test(NAME jsbind COMMAND $<TARGET_FILE:jsbind-test>)
 else()
     message(FATAL_ERROR "JSBind: Unsupported jsbind js engine")
 endif()
