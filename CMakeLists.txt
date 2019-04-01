@@ -106,6 +106,7 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
         endif()
 
         set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+        set(CEF_USE_SANDBOX OFF CACHE BOOL "Force turning off of CEF sandbox")
         include(${JSBIND_CEF_CEF_CMAKE_DIR}/cmake/cef_cmake.cmake)
         add_subdirectory(${JSBIND_CEF_CEF_CMAKE_DIR} cef-cmake)
         set(JSBIND_JS_BACKEND_LIBS cefdll_wrapper)
