@@ -188,7 +188,7 @@ public:
         return internal::from_jsc<T>(m_handle);
     }
 
-    local typeof() const
+    local typeOf() const
     {
         auto type = JSValueGetType(internal::jsc_context, m_handle);
         switch (type)
