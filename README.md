@@ -43,9 +43,9 @@ Supports:
 
 ## Motivation
 
-We had a very complex stack for [Mayhem](http://www.playmayhem.com/). It's a game with a C++ engine with some elements of the gameplay and pretty muche the entire metagame logic in JavaScript. The target platforms for playing the game were iOS and Android. We also supported the browser as a target though not for playing the game, but for spectating and watching replays. The development platforms were Windows, macOS and Linux. The game's server ran on a Linux containter. We also had an editor written in JavaScript which could run in a browser or as a local application on a custom Chromium browser (through CEF) with the engine embedded inside.
+We had a very complex stack for [Mayhem](http://www.playmayhem.com/). It's a game with a C++ engine with some elements of the gameplay and pretty muche the entire metagame logic in JavaScript. The target platforms for playing the game were iOS and Android. We also supported the browser as a target though not for playing the game, but for spectating and watching replays. The development platforms were Windows, macOS and Linux. The game's server ran on a Linux containter. We also had an editor written in JavaScript which could run in a browser or as a local application on a custom Chromium browser (through CEF) with the engine embedded inside. The server was in node.js and ran the engine as a native Addon.
 
-Eventually we had a core in C++ and JavaScript which we wanted to run on all those platforms. Initially we had the C++/JS bidning layer written in concrete ways for all platforms, but this quickly got out of hand. So we created jsbind. A binding library which lets you support all those platforms with a single codebase.
+Eventually we had a core in C++ and JavaScript which we wanted to run on all those platforms. Initially we had the C++/JS bidning layer written in concrete ways for all platforms, but this quickly got out of hand. So, we created jsbind: a binding library which lets you support all those platforms with a single codebase.
 
 JS is a very popular language. There is no doubt that other developers want to combine it with C++. If they have similar complex stacks, perhaps it can be of help to them.
 
@@ -65,7 +65,7 @@ Add this repository to your project's directory structure either as a submodule 
     * `JSBIND_JSC` for JavaScriptCore
 * optionally set `JSBIND_JS_BACKEND_LIBS` to the one or more targets which describe the JS backend.
     * This is not needed for emscripten
-    * If you do not set this, you will have to use `include_directories` to set the appropriate include directories for jsbind and then link your targets with the appropriate libraries.
+    * For the other backends, if you do not set this, you will have to use `include_directories` to set the appropriate include directories for jsbind and then link your targets with the appropriate libraries.
 * `add_subdirectory(path/to/jsbind/subdir)` to add the jsbind static library target.
 
 ### Basic usage
@@ -100,7 +100,7 @@ The library can be bound to a single CEF frame and its context. Multiple context
 
 #### JavaScriptCore
 
-The library can create a single JSC context. Binding to an existing context and creating multiple contexts are currently not supported.
+The library can create or be bound to a single JSC context. Multiple contexts are currently not supported.
 
 ## Contributing
 
@@ -120,7 +120,7 @@ The follwing links have instructions for how to set up your environment to build
 
 jsbind lacks some features compared to other language binding libaries. Notably it doesn't allow users to seamlessly expose C++ classes to the language. The authors believe this prevents the creation of hard to find bugs and unorthodox object lifetimes for C++ objects.
 
-Still if you absolutely need such features, to our knowledge no solution exists which supports that many backends. However if you're satisfied with a single backend (or two since node and v8 often come hand in hand), here is a list of more feature rich single backend libraries:
+Still if you absolutely need such features, to our knowledge no solution exists which supports that many backends. However if you're satisfied with a single backend (or two since node and v8 often come hand in hand), here is a list of more feature-rich single-backend libraries:
 
 * [v8pp](https://github.com/pmed/v8pp) - C++ bindings to v8 and node.js
 
