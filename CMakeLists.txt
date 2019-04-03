@@ -27,6 +27,11 @@ option(JSBIND_CEF "JSBind: Use CEF as underlying JS backend" OFF)
 
 mark_as_advanced(JSBIND_ENABLE_TESTING JSBIND_BUILD_EXAMPLES JSBIND_DEBUGGING)
 
+if(NOT JSBIND_TARGET_NAME)
+    message(STATUS "JSBind: JSBIND_TARGET_NAME is not set. Defaulting to `jsbind`")
+    set(JSBIND_TARGET_NAME jsbind)
+endif()
+
 set(sources)
 
 if(NOT COMMAND src_group)
@@ -58,7 +63,7 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
 
     if(JSBIND_EMSCRIPTEN)
         if(NOT EMSCRIPTEN)
-            message(FATAL_ERROR "Set the appropriate emscripten toolchain file")
+            message(FATAL_ERROR "JSBind: Set the appropriate emscripten toolchain file")
         endif()
         # nothing more to do all we need comes from the outside
     elseif(JSBIND_NODE)

@@ -65,7 +65,7 @@ elseif(JSBIND_CEF)
         jsbind/cef/bind.hpp
     )
 else()
-    message(FATAL_ERROR "Unsupported jsbind js engine")
+    message(FATAL_ERROR "JSBind: Unsupported jsbind js engine")
 endif()
 
 add_library(jsbind STATIC
@@ -96,7 +96,7 @@ elseif(JSBIND_EMSCRIPTEN)
 elseif(JSBIND_CEF)
     set(defs ${defs} -DJSBIND_CEF)
 else()
-    message(FATAL_ERROR "Unsupported jsbind js engine")
+    message(FATAL_ERROR "JSBind: Unsupported jsbind js engine")
 endif()
 
 target_compile_definitions(jsbind PUBLIC

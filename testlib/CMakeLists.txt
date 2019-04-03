@@ -27,6 +27,6 @@ add_library(jsbind-testlib STATIC
 target_include_directories(jsbind-testlib INTERFACE .)
 
 target_link_libraries(jsbind-testlib
-    jsbind
+    ${JSBIND_TARGET_NAME}
     ${JBIND_TESTLIB_DOCTEST_TARGET}
 )
