@@ -1,5 +1,7 @@
 # jsbind tests and examples for CEF
 
+> Mac not yet supported!
+
 1. Get [CEF-CMake](https://github.com/iboB/cef-cmake)
     * Clone it to `<jsbind-root>/third_party/cef-cmake`
     * ... or somewhere else and add the configuration option `-DJSBIND_CEF_CEF_CMAKE_DIR=<your-path>` when you configure the project
