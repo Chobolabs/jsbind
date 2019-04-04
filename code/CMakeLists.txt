@@ -68,11 +68,11 @@ else()
     message(FATAL_ERROR "JSBind: Unsupported jsbind js engine")
 endif()
 
-add_library(jsbind STATIC
+add_library(${JSBIND_TARGET_NAME} STATIC
     ${sources}
 )
 
-target_include_directories(jsbind PUBLIC
+target_include_directories(${JSBIND_TARGET_NAME} PUBLIC
     .
 )
 
@@ -99,12 +99,12 @@ else()
     message(FATAL_ERROR "JSBind: Unsupported jsbind js engine")
 endif()
 
-target_compile_definitions(jsbind PUBLIC
+target_compile_definitions(${JSBIND_TARGET_NAME} PUBLIC
     ${defs}
 )
 
 if(JSBIND_JS_BACKEND_LIBS)
-    target_link_libraries(jsbind PUBLIC
+    target_link_libraries(${JSBIND_TARGET_NAME} PUBLIC
         ${JSBIND_JS_BACKEND_LIBS}
     )
 endif()
