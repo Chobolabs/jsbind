@@ -34,7 +34,9 @@ namespace internal
         auto& v8ctx = *reinterpret_cast<v8::Local<v8::Context>*>(&internal::ctx.v8ctx);
         auto result = func->Call(v8ctx, self, num_args, v8_args);
 
-        if (result.IsEmpty() || tc.HasCaught()) report_exception(tc);
+        if (tc.HasCaught()) report_exception(tc);
+
+        if (result.IsEmpty()) return v8::Undefined(internal::isolate);
 
         return scope.Escape(result.ToLocalChecked());
     }
