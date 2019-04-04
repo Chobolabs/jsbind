@@ -31,11 +31,12 @@ namespace internal
 
         v8::TryCatch tc(internal::isolate);
 
-        auto result = func->Call(self, num_args, v8_args);
+        auto& v8ctx = *reinterpret_cast<v8::Local<v8::Context>*>(&internal::ctx.v8ctx);
+        auto result = func->Call(v8ctx, self, num_args, v8_args);
 
-        if (tc.HasCaught()) report_exception(tc);
+        if (result.IsEmpty() || tc.HasCaught()) report_exception(tc);
 
-        return scope.Escape(result);
+        return scope.Escape(result.ToLocalChecked());
     }
 
     ///////////////////////////////////////////////////////////////////

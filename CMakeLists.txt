@@ -121,6 +121,28 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
         endif()
         add_subdirectory(${JSBIND_JSC_JSC_STANDALONE_DIR} jsc-standalone)
         set(JSBIND_JS_BACKEND_LIBS javascriptcore)
+    elseif(JSBIND_V8)
+        if(MSVC)
+            if((${MSVC_VERSION} LESS 1910) OR (${MSVC_VERSION} GREATER 1919) OR (CMAKE_SIZEOF_VOID_P EQUAL 4))
+                message(FATAL_ERROR "JSBind: Only Visual Studio 15 2017 Win64 supported for tests")
+            endif()
+            add_library(jsbind-v8-target INTERFACE)
+            target_include_directories(jsbind-v8-target INTERFACE
+                ${CMAKE_CURRENT_SOURCE_DIR}/third_party/v8-v141-x64.7.4.288.11/include
+            )
+            target_link_libraries(jsbind-v8-target INTERFACE
+                debug ${CMAKE_CURRENT_SOURCE_DIR}/third_party/v8-v141-x64.7.4.288.11/lib/Debug/v8.dll.lib
+                debug ${CMAKE_CURRENT_SOURCE_DIR}/third_party/v8-v141-x64.7.4.288.11/lib/Debug/v8_libbase.dll.lib
+                debug ${CMAKE_CURRENT_SOURCE_DIR}/third_party/v8-v141-x64.7.4.288.11/lib/Debug/v8_libplatform.dll.lib
+                optimized ${CMAKE_CURRENT_SOURCE_DIR}/third_party/v8-v141-x64.7.4.288.11/lib/Release/v8.dll.lib
+                optimized ${CMAKE_CURRENT_SOURCE_DIR}/third_party/v8-v141-x64.7.4.288.11/lib/Release/v8_libbase.dll.lib
+                optimized ${CMAKE_CURRENT_SOURCE_DIR}/third_party/v8-v141-x64.7.4.288.11/lib/Release/v8_libplatform.dll.lib
+            )
+        else()
+            message(FATAL_ERROR "JSBind: Unsupported v8 config for tests")
+        endif()
+        
+        set(JSBIND_JS_BACKEND_LIBS jsbind-v8-target)
     else()
         message(FATAL_ERROR "JSBind: Unsupported jsbind js engine")
     endif()

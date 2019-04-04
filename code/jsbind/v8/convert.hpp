@@ -34,7 +34,7 @@ namespace internal
 
         static from_type from_v8(v8::Local<v8::Value> val)
         {
-            const v8::String::Utf8Value str(val);
+            const v8::String::Utf8Value str(isolate, val);
             return from_type(*str, str.length());
         }
 
@@ -70,7 +70,7 @@ namespace internal
 
         static from_type from_v8(v8::Local<v8::Value> value)
         {
-            return value->ToBoolean()->Value();
+            return value->ToBoolean(isolate)->Value();
         }
 
         static to_type to_v8(bool value)
@@ -89,20 +89,22 @@ namespace internal
 
         static from_type from_v8(v8::Local<v8::Value> value)
         {
+            auto& v8ctx = *reinterpret_cast<v8::Local<v8::Context>*>(&internal::ctx.v8ctx);
+
             if (bits <= 32)
             {
                 if (is_signed)
                 {
-                    return static_cast<T>(value->Int32Value());
+                    return static_cast<T>(value->Int32Value(v8ctx).FromMaybe(0));
                 }
                 else
                 {
-                    return static_cast<T>(value->Uint32Value());
+                    return static_cast<T>(value->Uint32Value(v8ctx).FromMaybe(0));
                 }
             }
             else
             {
-                return static_cast<T>(value->IntegerValue());
+                return static_cast<T>(value->IntegerValue(v8ctx).FromMaybe(0));
             }
         }
 
@@ -135,7 +137,8 @@ namespace internal
 
         static from_type from_v8(v8::Local<v8::Value> value)
         {
-            return static_cast<T>(value->NumberValue());
+            auto& v8ctx = *reinterpret_cast<v8::Local<v8::Context>*>(&internal::ctx.v8ctx);
+            return static_cast<T>(value->NumberValue(v8ctx).FromMaybe(0));
         }
 
         static to_type to_v8(T value)

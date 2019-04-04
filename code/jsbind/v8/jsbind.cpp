@@ -81,8 +81,8 @@ struct V8Initializer
     V8Initializer()
     {
         V8::InitializeICU();
-        platform = platform::CreateDefaultPlatform();
-        V8::InitializePlatform(platform);
+        platform = platform::NewDefaultPlatform();
+        V8::InitializePlatform(platform.get());
         V8::Initialize();
     }
 
@@ -90,11 +90,9 @@ struct V8Initializer
     {
         V8::Dispose();
         V8::ShutdownPlatform();
-        delete platform;
-        platform = nullptr;
     }
 
-    Platform* platform;
+    std::unique_ptr<Platform> platform;
 
     MallocArrayBufferAllocator allocator;
 };
@@ -143,7 +141,7 @@ void v8_assert(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
     if (args.Length() == 0) return;
 
-    if (args[0].As<v8::Boolean>()->BooleanValue())
+    if (args[0].As<v8::Boolean>()->BooleanValue(isolate))
     {
         return;
     }
@@ -173,7 +171,7 @@ namespace internal
 
         v8::HandleScope handleScope(isolate);
 
-        v8::String::Utf8Value exception(tryCatch.Exception());
+        v8::String::Utf8Value exception(isolate, tryCatch.Exception());
         const char* exceptionString = *exception;
         v8::Handle<v8::Message> message = tryCatch.Message();
 
@@ -188,13 +186,15 @@ namespace internal
         else
         {
             // Print (filename):(line number): (message).
-            v8::String::Utf8Value filename(message->GetScriptResourceName());
+            auto& v8ctx = *reinterpret_cast<v8::Local<v8::Context>*>(&ctx.v8ctx);
+            v8::String::Utf8Value filename(isolate, message->GetScriptResourceName());
             const char* filenameString = *filename;
-            int linenum = message->GetLineNumber();
+            int linenum = message->GetLineNumber(v8ctx).FromMaybe(0);
             ss << filenameString << ":" << linenum << ": " << exceptionString << std::endl;
 
+            v8::Local<v8::Value> emptyString;
             // Print line of source code.
-            v8::String::Utf8Value sourceline(message->GetSourceLine());
+            v8::String::Utf8Value sourceline(isolate, message->GetSourceLine(v8ctx).FromMaybe(emptyString));
             const char* sourceline_string = *sourceline;
             ss << sourceline_string << std::endl;
 
@@ -212,7 +212,7 @@ namespace internal
             }
             ss << std::endl;
 
-            v8::String::Utf8Value stack_trace(tryCatch.StackTrace());
+            v8::String::Utf8Value stack_trace(isolate, tryCatch.StackTrace(v8ctx).FromMaybe(emptyString));
             if (stack_trace.length() > 0) {
                 const char* stack_trace_string = *stack_trace;
                 ss << stack_trace_string;
@@ -273,7 +273,7 @@ void initialize()
         ctx.v8ctx.Reset(isolate, c);
 
         ctx.enter();
-        v8::V8::SetFatalErrorHandler(report_fatal_error);
+        isolate->SetFatalErrorHandler(report_fatal_error);
         ctx.exit();
     }
 }
@@ -286,13 +286,17 @@ void v8_initialize_with_global(v8::Local<Object> global)
 
     isolate = v8::Isolate::GetCurrent();
     v8::HandleScope scope(isolate);
-    ctx.v8ctx.Reset(isolate, isolate->GetCurrentContext());
+    auto lctx = isolate->GetCurrentContext();
+    ctx.v8ctx.Reset(isolate, lctx);
 
     // bindings
     v8::Local<v8::ObjectTemplate> module = v8::ObjectTemplate::New(isolate);
     class_data::global = &module;
     initialize_bindings();
-    auto r = global->SetPrototype(ctx.to_local(), module->NewInstance());
+
+    auto maybeInstance = module->NewInstance(lctx);
+    JSBIND_JS_CHECK(!maybeInstance.IsEmpty(), "Could not create Module prototype");
+    auto r = global->SetPrototype(lctx, maybeInstance.ToLocalChecked());
     JSBIND_JS_CHECK(r.FromMaybe(false), "Could not set Module prototype");
     class_data::global = nullptr;
 }
@@ -329,6 +333,8 @@ void run_script(const char* src, const char* fname)
 {
     HandleScope scope(isolate);
 
+    auto& v8ctx = *reinterpret_cast<v8::Local<v8::Context>*>(&internal::ctx.v8ctx);
+
     auto source = String::NewFromUtf8(isolate, src, NewStringType::kNormal).ToLocalChecked();
 
     Local<Script> script;
@@ -336,11 +342,12 @@ void run_script(const char* src, const char* fname)
     if (fname)
     {
         auto filename = String::NewFromUtf8(isolate, fname, NewStringType::kNormal).ToLocalChecked();
-        script = Script::Compile(source, filename);
+        v8::ScriptOrigin origin(filename);
+        script = Script::Compile(v8ctx, source, &origin).FromMaybe(script);
     }
     else
     {
-        script = Script::Compile(source);
+        script = Script::Compile(v8ctx, source).FromMaybe(script);
     }
 
     v8::TryCatch try_catch(isolate);
@@ -353,9 +360,9 @@ void run_script(const char* src, const char* fname)
     }
     else
     {
-        v8::Handle<v8::Value> result = script->Run();
+        auto result = script->Run(v8ctx);
 
-        if (result.IsEmpty())
+        if (result.IsEmpty() || result.ToLocalChecked().IsEmpty())
         {
             report_exception(try_catch);
             return;

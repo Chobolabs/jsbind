@@ -150,7 +150,8 @@ public:
 
     bool equals(const local& other) const
     {
-        return m_handle->Equals(other.m_handle);
+        auto& v8ctx = *reinterpret_cast<v8::Local<v8::Context>*>(&internal::ctx.v8ctx);
+        return m_handle->Equals(v8ctx, other.m_handle).FromMaybe(false);
     }
 
     bool strictlyEquals(const local& other) const
@@ -227,8 +228,11 @@ std::vector<T> vecFromJSArray(local v)
 
 inline void foreach(local obj, std::function<bool(local key, local value)> iteration)
 {
+    auto& v8ctx = *reinterpret_cast<v8::Local<v8::Context>*>(&internal::ctx.v8ctx);
     auto v8_obj = v8::Object::Cast(*obj.m_handle);
-    auto names = v8_obj->GetPropertyNames();
+    auto maybeNames = v8_obj->GetPropertyNames(v8ctx);
+    if (maybeNames.IsEmpty()) return;
+    auto names = maybeNames.ToLocalChecked();
     auto len = names->Length();
 
     for (uint32_t i = 0; i < len; ++i)
