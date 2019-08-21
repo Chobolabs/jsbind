@@ -32,17 +32,6 @@ if(NOT JSBIND_TARGET_NAME)
     set(JSBIND_TARGET_NAME jsbind)
 endif()
 
-set(sources)
-
-if(NOT COMMAND src_group)
-    macro(src_group GROUP_NAME SRC_LIST)
-        source_group(${GROUP_NAME} FILES ${ARGN})
-        foreach(filename ${ARGN})
-            list(APPEND ${SRC_LIST} ${filename})
-        endforeach()
-    endmacro(src_group)
-endif()
-
 ################################################################################
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
     # Danger zone!
@@ -141,7 +130,7 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
         else()
             message(FATAL_ERROR "JSBind: Unsupported v8 config for tests")
         endif()
-        
+
         set(JSBIND_JS_BACKEND_LIBS jsbind-v8-target)
     else()
         message(FATAL_ERROR "JSBind: Unsupported jsbind js engine")
