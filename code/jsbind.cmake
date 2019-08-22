@@ -88,7 +88,7 @@ add_library(${JSBIND_TARGET_NAME} STATIC
 )
 
 target_include_directories(${JSBIND_TARGET_NAME} PUBLIC
-    .
+    ${code}
 )
 
 set(defs)
