@@ -11,7 +11,14 @@
 #if !defined(NOMINMAX)
 #   define NOMINMAX
 #endif
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#endif
 #include <include/cef_v8.h>
+#if defined(__GNUC__)
+#pragma GCC diagnostic pop
+#endif
 
 namespace jsbind
 {

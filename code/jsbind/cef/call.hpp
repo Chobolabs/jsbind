@@ -66,7 +66,7 @@ namespace internal
             : m_cxx_func(cxx_func)
         {}
 
-        virtual bool Execute(const CefString& name, CefRefPtr<CefV8Value> object, const CefV8ValueList& arguments, CefRefPtr<CefV8Value>& retval, CefString& exception) override
+        virtual bool Execute(const CefString& /*name*/, CefRefPtr<CefV8Value> /*object*/, const CefV8ValueList& arguments, CefRefPtr<CefV8Value>& retval, CefString& /*exception*/) override
         {
             JSBIND_JS_CHECK((unsigned long)arguments.size() >= sizeof...(Args), "Not enough arguments for function.");
             retval = tuple_call<std::tuple<Args...>>(m_cxx_func, arguments, make_index_sequence<sizeof...(Args)>());
